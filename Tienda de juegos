@@ -1,0 +1,134 @@
+#include <iostream>
+using namespace std;
+// << >>
+class Juego
+{
+    protected:
+    string titulo;
+    float costo;
+    public:
+    Juego(string titulo, float costo) : titulo(titulo), costo(costo)
+    {
+    }
+
+    float calcularPrecioFinal()
+    {
+        return costo;
+    }
+
+    void imprimir()
+    {
+        cout << titulo << "Precio: " << costo << " pesos" << endl;
+    }
+};
+
+class Fisica : public Juego
+{
+    private:
+    float envio;
+    public:
+    Fisica(string titulo, float costo, float envio) : Juego(titulo, costo), envio(envio)
+    {
+    }
+
+    float calcularPrecioFinal()
+    {
+        return costo + envio;
+    }
+
+    void imprimir()
+    {
+        cout << titulo << " (Fisico)" << endl;
+        cout << "Costo: " << costo << " pesos" << endl;
+        cout << "Envio: " << envio << " pesos" << endl;
+        cout << "Precio final: " << calcularPrecioFinal() << " pesos" << endl;
+    }
+};
+
+class Digital : public Juego
+{
+    private:
+    float descuento;
+    public:
+    Digital(string titulo, float costo) : Juego(titulo, costo)
+    {
+        descuento = 15;
+    }
+
+    float calcularPrecioFinal()
+    {
+        return costo - (costo * descuento / 100);
+    }
+
+    void imprimir()
+    {
+        cout << titulo << " (Digital)" << endl;
+        cout << "Costo: " << costo << " pesos"  << endl;
+        cout << "Descuento: " << descuento << "%" << endl;
+        cout << "Precio final: " << calcularPrecioFinal() << " pesos"  << endl;
+    }
+};
+
+int main()
+{
+    Fisica call("Call of Duty", 6000, 800);
+    Fisica minecraft("Minecraft", 3000, 600);
+    Fisica terraria("Terraria", 2500, 600);
+    Digital celeste("Celeste", 8000);
+    Digital proSoccer("Pro Soccer", 3000);
+    Digital isaac("Isaac", 1000);
+
+    int opcion;
+    float total = 0;
+
+    do
+    {
+        cout << endl << "Fisicos:" << endl;
+        cout << "1. Call of Duty" << endl;
+        cout << "2. Minecraft" << endl;
+        cout << "3. Terraria" << endl;
+        cout << "Digitales:" << endl;
+        cout << "4. Celeste" << endl;
+        cout << "5. Pro Soccer" << endl;
+        cout << "6. Isaac" << endl;
+        cout << endl << "Elija un juego (0 para salir): ";
+        cin >> opcion;
+        cout << endl;
+
+        switch (opcion)
+        {
+            case 1:
+                call.imprimir();
+                total += call.calcularPrecioFinal();
+                break;
+            case 2:
+                minecraft.imprimir();
+                total += minecraft.calcularPrecioFinal();
+                break;
+            case 3:
+                terraria.imprimir();
+                total += terraria.calcularPrecioFinal();
+                break;
+            case 4:
+                celeste.imprimir();
+                total += celeste.calcularPrecioFinal();
+                break;
+            case 5:
+                proSoccer.imprimir();
+                total += proSoccer.calcularPrecioFinal();
+                break;
+            case 6:
+                isaac.imprimir();
+                total += isaac.calcularPrecioFinal();
+                break;
+            case 0:
+                cout << "Saliste de la tienda..." << endl;
+                cout << "Total gastado: " << total << " pesos" << endl;
+                break;
+            default:
+                cout << "Tocaste una opcion que no existe (solo 1 al 6 y 0 para comprar)" << endl;
+        }
+    } while (opcion != 0);
+
+    return 0;
+}
